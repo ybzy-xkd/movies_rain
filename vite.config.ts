@@ -2,7 +2,11 @@ import { resolve } from 'path';
 import {defineConfig, loadEnv, UserConfig} from 'vite'
 import react from '@vitejs/plugin-react'
 import autoprefixer from 'autoprefixer';
+import { nodePolyfills } from 'vite-plugin-node-polyfills';
 import postcsspxtoviewport from 'postcss-px-to-viewport-8-plugin'
+import {Plugin} from "postcss";
+import { visualizer } from 'rollup-plugin-visualizer'
+// import postcssRtl from 'postcss-rtl'
 
 // https://vitejs.dev/config/
 export default defineConfig((config): UserConfig => {
@@ -27,8 +31,11 @@ export default defineConfig((config): UserConfig => {
             minPixelValue: 1, // 默认值1，小于或等于1px则不进行转换
             mediaQuery: true, // 是否在媒体查询的css代码中也进行转换，默认false
             replace: true, // 是否转换后直接更换属性值
-            landscape: false // 是否处理横屏情况
-          })
+            landscape: false, // 是否处理横屏情况
+          }) as Plugin,
+          // postcssRtl({
+          //   blacklist: ['border-radius', 'margin']
+          // })
         ]
       }
     },
@@ -40,29 +47,50 @@ export default defineConfig((config): UserConfig => {
       },
     },
     server: {
-      port: 8080,
+      port: 3006,
       host: true,
       open: true,
       // proxy: createProxy(localEnv.VITE_APP_BASE_API, localEnv.VITE_APP_URL),
     },
-    plugins: [react()],
+    plugins: [
+      react(),
+      nodePolyfills(),
+      visualizer({
+        open: false,
+        gzipSize: true,
+        brotliSize: true,
+        filename: 'dist/stats.html'
+      })
+    ],
     build: {
+      assetsInlineLimit: 0,
       chunkSizeWarningLimit: 500,
       sourcemap: false,
       minify: 'terser', // esbuild
+      // target: ['edge90', 'chrome90', 'firefox90', 'safari15'],
       cssCodeSplit: true,
+      cssTarget: 'chrome61',
       terserOptions: {
+        mangle: true,
         compress: {
           drop_console: true,
+          drop_debugger: true,
+          reduce_vars: true,
+          unused: true,
         },
       },
       rollupOptions: {
-        // output: {
-        //   sourcemap: true
-        // },
+        output: {
+          manualChunks: {
+            react: ['react', 'react-dom', 'react-i18next', 'react-router-dom'],
+            vendor: ['lodash'],
+          },
+          sourcemap: true,
+          assetFileNames: 'assets/[name]-[hash].[ext]',
+        },
         // plugins: createRollupPlugins(),
         treeshake: true,
-      }
+      },
     },
     define: {
       __ISBUILDPRODUCTION__: isBuild,

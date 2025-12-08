@@ -1,18 +1,15 @@
 import {BrowserRouter, useRoutes} from "react-router-dom";
-import {Layout} from "antd";
 import routers from "@/config/routers.tsx";
 
 function AppRouters () {
   return useRoutes(routers)
 }
-function App() {
 
+function App() {
   return (
-    <Layout>
-      <BrowserRouter>
-        <AppRouters />
-      </BrowserRouter>
-    </Layout>
+    <BrowserRouter>
+      <AppRouters />
+    </BrowserRouter>
   )
 }
 

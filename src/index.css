@@ -1,16 +1,1 @@
-body, html {
-  /*line-height: 1.5;*/
-  margin: 0;
-  padding: 0;
-}
-body, html {
-  height: 100%;
-  width: 100%;
-  background-color: #000000;
-}
-#root {
-  width: 100%;
-  height: 100%;
-  padding: unset;
-  margin: unset;
-}
+/* Base styles are now in global.scss */

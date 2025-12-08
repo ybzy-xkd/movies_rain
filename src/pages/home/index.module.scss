@@ -1,5 +1,166 @@
-.page {
-  width: 100%;
-  height: 100px;
-  background-color: red;
+@import '@/styles/variables.scss';
+
+.home {
+  min-height: 100vh;
+  background-color: var(--bg-primary);
+}
+
+.container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: $spacing-xl $spacing-lg;
+  
+  @media (min-width: $breakpoint-lg) {
+    padding: $spacing-xxl $spacing-xl;
+  }
+}
+
+.pageHeader {
+  margin-bottom: $spacing-xl;
+}
+
+.pageTitle {
+  font-size: 36px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0 0 $spacing-lg 0;
+  letter-spacing: -1px;
+  
+  @media (min-width: $breakpoint-md) {
+    font-size: 42px;
+  }
+  
+  @media (min-width: $breakpoint-lg) {
+    font-size: 48px;
+  }
+}
+
+.headerActions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: $spacing-lg;
+  flex-wrap: wrap;
+}
+
+.viewModeToggle {
+  display: flex;
+  gap: $spacing-xs;
+  background-color: var(--bg-secondary);
+  padding: 4px;
+  border-radius: 12px;
+  border: 1.5px solid var(--border-color);
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 1px 3px var(--shadow);
+}
+
+.viewBtn {
+  position: relative;
+  z-index: 2;
+  transition: color $transition-normal, font-weight $transition-normal;
+  border: none !important;
+  overflow: visible;
+  
+  // 禁用 Button 组件默认的 hover transform 和 shadow
+  &:hover {
+    transform: none !important;
+    box-shadow: none !important;
+  }
+  
+  // 背景过渡层
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+    border-radius: 8px;
+    opacity: 0;
+    transform: scale(0.9);
+    transition: opacity $transition-normal cubic-bezier(0.4, 0, 0.2, 1),
+                transform $transition-normal cubic-bezier(0.4, 0, 0.2, 1),
+                box-shadow $transition-normal cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: -1;
+    pointer-events: none;
+  }
+  
+  // 选中状态（primary）
+  :global(&.primary) {
+    background: transparent !important;
+    background-color: transparent !important;
+    color: white !important;
+    font-weight: 700;
+    
+    &::before {
+      opacity: 1 !important;
+      transform: scale(1) !important;
+      box-shadow: 0 2px 8px rgba(0, 123, 255, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    }
+  }
+  
+  // 未选中状态（outline）
+  :global(&.outline) {
+    background: transparent !important;
+    background-color: transparent !important;
+    border: none !important;
+    color: var(--text-primary);
+    
+    &::before {
+      opacity: 0;
+      transform: scale(0.9);
+    }
+  }
+  
+  // 悬停效果（仅未选中状态）
+  &:hover:not(:global(.primary))::before {
+    opacity: 0.15;
+    transform: scale(1);
+  }
+}
+
+.moviesGrid {
+  display: grid;
+  gap: $spacing-lg;
+  
+  &.grid {
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    
+    @media (min-width: $breakpoint-md) {
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    }
+    
+    @media (min-width: $breakpoint-lg) {
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: $spacing-xl $spacing-lg;
+    }
+    
+    @media (min-width: $breakpoint-xl) {
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    }
+  }
+  
+  &.list {
+    grid-template-columns: 1fr;
+    gap: $spacing-lg;
+  }
+}
+
+.loadMore {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: $spacing-xxl;
+  margin-bottom: $spacing-xxl;
+  padding: $spacing-xl 0;
+  min-height: 120px;
+}
+
+.emptyState {
+  text-align: center;
+  padding: $spacing-xxl;
+  color: var(--text-secondary);
+  font-size: 18px;
 }

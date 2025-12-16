@@ -1,0 +1,28 @@
+{
+  "app": {
+    "title": "Movies",
+    "nowPlaying": "Now Playing",
+    "topRated": "Top Rated",
+    "search": "Search",
+    "searchPlaceholder": "Search movies...",
+    "loading": "Loading...",
+    "error": "Error",
+    "networkError": "Network error. Please check your connection.",
+    "noResults": "No results found",
+    "tryAgain": "Try Again",
+    "movieDetails": "Movie Details",
+    "overview": "Overview",
+    "releaseDate": "Release Date",
+    "rating": "Rating",
+    "voteCount": "Vote Count",
+    "back": "Back",
+    "listView": "List View",
+    "gridView": "Grid View",
+    "loadMore": "Load More",
+    "language": "Language",
+    "theme": "Theme",
+    "light": "Light",
+    "dark": "Dark"
+  }
+}
+

@@ -1,0 +1,33 @@
+@import '@/styles/variables.scss';
+
+.tabBar {
+  display: flex;
+  gap: $spacing-md;
+  border-bottom: 2px solid var(--border-color);
+  padding-bottom: $spacing-xs;
+}
+
+.tab {
+  padding: $spacing-sm $spacing-md;
+  background: none;
+  border: none;
+  border-bottom: 3px solid transparent;
+  color: var(--text-secondary);
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all $transition-fast;
+  margin-bottom: -3px;
+  position: relative;
+  white-space: nowrap;
+  
+  &:hover {
+    color: var(--text-primary);
+  }
+  
+  &.active {
+    color: var(--text-primary);
+    border-bottom-color: #007bff;
+  }
+}
+
